@@ -35,6 +35,11 @@ char **get_tokens(char *buf, char *sep)
 	for (word = strtok(temp_str, sep); word != NULL; word = strtok(NULL, sep)) /*initializes position count in the array of char pointers to the arg*/
 	{
 		args[count] = strdup(word);
+		if(!args[count])
+		{
+			perror("Memory allocation failed");
+			exit(EXIT_FAILURE);
+		}
 		count++;
 	}
 	args[count] = NULL; /*sets the final position in the array to NULL*/
