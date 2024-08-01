@@ -14,11 +14,11 @@ char *path_get(char **env)
 	while (*env) /*while env != NULL*/
 	{
 		temp = *env; /*sets temp to the environment pointer*/
-		if (strncmp("PATH=", temp, 5) == 0) //changed to path= and changed to 5 to make up for the =
+		if (strncmp("PATH=", temp, 5) == 0) /*changed to path= and changed to 5 to make up for the = */
 		/*checks to see if it is the PATH*/
 		{
 			return (temp + 5); /*returns a pointer to the PATH if so*/
-			//changed to 5 to make up for =
+			/*changed to 5 to make up for = */
 		}
 		env++; /*if not it iterates to the next point in the array of char pointers*/
 	}
