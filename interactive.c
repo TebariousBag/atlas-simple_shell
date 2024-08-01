@@ -48,5 +48,6 @@ int loop_for_interactive(void)
 			}
 			free_all(&args, &path_args, &buf, &temp);
 		}
-	return (0);
+		return (0);
+	}
 }

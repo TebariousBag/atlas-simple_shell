@@ -25,8 +25,6 @@ char **get_tokens(char *buf, char *sep)
 	{
 		count++;
 	}
-	args[count] = NULL;
-
 	args = malloc(sizeof(char *) * (count + 1)); /*dynamically allocates an array of char pointers based off of the count*/
 	if (!args)
 	{
@@ -40,6 +38,6 @@ char **get_tokens(char *buf, char *sep)
 		count++;
 	}
 	args[count] = NULL; /*sets the final position in the array to NULL*/
-	
+
 	return (args); /*returns the array of args to the calling function*/
 }
