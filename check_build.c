@@ -15,6 +15,8 @@ char *check_build(char *arg, char **path)
 	char *temp = NULL; /*a temp string for the path arg and the input to get spliced*/
 	int count = 1; /*arg position counter*/
 
+	int temp_alloc = 0; //to track if temp has been allocated
+
 	if (stat(arg, &st) == 0) /*checks to see if the base argument is a valid path first*/
 	{
 		return (arg); /*if it is then it returns that to the calling function*/
@@ -23,19 +25,28 @@ char *check_build(char *arg, char **path)
 	{
 		while (path[count] != NULL) /*loop that iterates through the passed path args*/
 		{
+			if (temp_alloc)	//free temp if it has already been allocated
+			{
+				free(temp);
+				temp_alloc = 0;	//reset tracker to 0
+			}
+			
 			temp = malloc(sizeof(char) * (strlen(path[count]) + 2 + (strlen(arg))));
 			strcpy(temp, path[count]);
 			strcat(temp, "/");
 			strcat(temp, arg); /*adds the arg to the back of the path*/
+
 			if (stat(temp, &st) == 0) /*checks to see if new path is valid*/
 			{
-				if (access(temp, X_OK) == 0)
-				{
-					return (temp); /*if it is valid then it returns to the calling function with the new path*/
-				}
+				temp_alloc = 1; //set to 1 since temp is allocated
+				return (temp); /*if it is valid then it returns to the calling function with the new path*/
 			}
 			count++; /*if that path is not valid then it goes to the next path arg*/
 		}
+	}
+	if (temp_alloc) //free temp if it was allocated but no path found
+	{
+		free(temp);
 	}
 	return (NULL); /*if it goes through all path args and still does not find a valid path it returns NULL*/
 }
