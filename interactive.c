@@ -45,9 +45,10 @@ int loop_for_interactive(void)
 			{
 				args[0] = strdup(temp);
 				function_call(args, environ);
+				free(args[0]);
 			}
 			free_all(&args, &path_args, &buf, &temp);
 		}
-		return (0);
 	}
+	return (0);
 }
