@@ -14,8 +14,6 @@ int non_interactive(void)
 	extern char **environ;
 	char *path, *temp = NULL;
 
-	printf("$ "); /*with print at the beginning of each line no matter what*/
-
 	check = getline(&buf, &size, stdin); /*get input from standard input and dynamically allocates the needed memory to buf, ignoring size*/
 	if (check == -1) /*check to see if getline failed*/
 	{
@@ -29,12 +27,13 @@ int non_interactive(void)
 	temp = check_build(args[0], path_args); /*gets a workable path and puts it in postion 0 of the args array*/
 	if (temp == NULL)
 	{
+		free_all(&args, &path_args, &buf, &temp);
 		perror("Cannot find command\n");
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		args[0] = temp;
+		args[0] = strdup(temp);
 		function_call(args, environ);
 	}
 	free_all(&args, &path_args, &buf, &temp);
